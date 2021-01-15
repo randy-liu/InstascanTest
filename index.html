@@ -12,6 +12,8 @@
   </head>
   <body>
     <video id="preview"></video>
+	<div>
+	</div>
 	<p id="TotalCameras"></p>
 	<table id="BarcodeValue">
 		<thead>
@@ -22,6 +24,7 @@
 		<tbody>
 		</tbody>
 	</table>
+	<input name="UsedCamera" type="hidden"/>
   </body>
   
   <script type="text/javascript">
@@ -44,10 +47,8 @@
 			if(cameras.length == 0){ return false;}
 			
 			cameras.forEach(function(item, index){
-				var radioBtn = $('<input type="radio" name="cameras" value="'+ item.id +'">' + item.name + '</input>').appendTo('body');
+				var radioBtn = $('<input type="radio" name="cameras" value="'+ item.id +'">' + item.name + '</input>').appendTo('div');
 			})
-						
-			//scanner.start(cameras[0]);
 			
 		}).catch(function (e) {
 			console.error(e);
@@ -59,15 +60,14 @@
 			
 			var $this = $(this);
 			
-			console.log($this);
-			
 			Instascan.Camera.getCameras().then(function (cameras) {
 			
 				cameras.forEach(function(item, index){
 				
+					scanner.stop()
 					if(item.id != $this.val()){ return false;}
-					
 					scanner.start(cameras[index]);
+					
 				})
 							
 			}).catch(function (e) {
