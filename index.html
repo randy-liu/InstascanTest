@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Instascan</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="instascan.min.js"></script>
 	<style>
 		table, td {
@@ -11,6 +12,7 @@
   </head>
   <body>
     <video id="preview"></video>
+	<p id="TotalCameras"></p>
 	<table id="BarcodeValue">
 		<thead>
 			<tr>
@@ -23,7 +25,9 @@
   </body>
   
   <script type="text/javascript">
+	jQuery(function($){
 		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+		
 		scanner.addListener('scan', function (content) {
 			var tbody = document.getElementById('BarcodeValue').getElementsByTagName('tbody')[0];
 			var row = tbody.insertRow();
@@ -31,14 +35,43 @@
 			var text = document.createTextNode(content);
 			cel1.appendChild(text);
 		});
+		
+		
 		Instascan.Camera.getCameras().then(function (cameras) {
-		if (cameras.length > 0) {
-		  scanner.start(cameras[0]);
-		} else {
-		  console.error('No cameras found.');
-		}
+		
+			$('#TotalCameras').text('total cameras:' + cameras.length)
+		
+			if(cameras.length == 0){ return false;}
+			
+			cameras.forEach(function(item, index){
+				var radioBtn = $('<input type="radio" name="cameras" value="'+ item.id +'">' + item.name + '</input>').appendTo('body');
+			})
+						
 		}).catch(function (e) {
 			console.error(e);
 		});
+		
+		
+		
+		$('table').on('change', '[name="cameras"]', function(){
+			
+			var $this = $(this);
+			
+			Instascan.Camera.getCameras().then(function (cameras) {
+			
+				cameras.forEach(function(item, index){
+				
+					if(item.id != $this.val()){ return false;}
+					
+					scanner.start(cameras[index]);
+				})
+							
+			}).catch(function (e) {
+				console.error(e);
+			});			
+			
+		});
+	});
+	
 	</script>
 </html>
