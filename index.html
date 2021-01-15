@@ -23,8 +23,8 @@
   <script type="text/javascript">
 		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 		scanner.addListener('scan', function (content) {
-			var table = document.getElementById('BarcodeValue');
-			var row = table.insertRow(0);
+			var tbody = document.getElementById('BarcodeValue').getElementsByTagName('tbody')[0];
+			var row = tbody.insertRow(0);
 			var cell1 = row.insertCell(0);
 			cell1.appendChild(content);
 		});
