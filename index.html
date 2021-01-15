@@ -13,7 +13,9 @@
     <video id="preview"></video>
 	<table id="BarcodeValue">
 		<thead>
-			<th>刷</th>
+			<tr>
+				<th>刷</th>
+			</tr>
 		</thead>
 		<tbody>
 		</tbody>
@@ -26,7 +28,8 @@
 			var tbody = document.getElementById('BarcodeValue').getElementsByTagName('tbody')[0];
 			var row = tbody.insertRow(0);
 			var cell1 = row.insertCell(0);
-			cell1.appendChild(content);
+			var text = document.createTextNode(content);
+			cell1.appendChild(text);
 		});
 		Instascan.Camera.getCameras().then(function (cameras) {
 		if (cameras.length > 0) {
