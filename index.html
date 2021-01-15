@@ -57,7 +57,7 @@
 			if(cameras.length == 0){ return false;}
 			
 			cameras.forEach(function(item, index){
-				var radioBtn = $('<input type="radio" name="cameras" data-index="'+ index +'" value="'+ item.id +'">' + item.name + '</input>').appendTo('div');
+				var radioBtn = $('<input type="radio" name="cameras" data-index='+ index +' value="'+ item.id +'">' + item.name + '</input>').appendTo('div');
 			})
 			
 		}).catch(function (e) {
@@ -74,7 +74,11 @@
 			
 			Instascan.Camera.getCameras().then(function (cameras) {
 				
-				scanner.start(cameras[$this.data(index)]);
+				var i = $this.data("index");
+				
+				console.log(i);
+				
+				scanner.start(cameras[i]);
 							
 			}).catch(function (e) {
 				console.error(e);
