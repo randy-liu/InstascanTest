@@ -6,7 +6,12 @@
     <script type="text/javascript" src="instascan.min.js"></script>
 	<style>
 		table, td {
-		  border: 1px solid black;
+			border: 1px solid black;
+		}
+		
+		[type="radio"] {
+			display: block;
+			margin: 5px;
 		}
 	</style>
   </head>
@@ -64,10 +69,12 @@
 			
 				cameras.forEach(function(item, index){
 				
-					scanner.stop()
-					if(item.id != $this.val()){ return false;}
-					scanner.start(cameras[index]);
+					scanner.stop().then(function(){
 					
+						if(item.id != $this.val()){ return false;}
+						scanner.start(cameras[index]);
+					
+					});
 				})
 							
 			}).catch(function (e) {
