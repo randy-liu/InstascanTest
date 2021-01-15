@@ -5,12 +5,17 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="instascan.min.js"></script>
 	<style>
+		viedo{
+			margin: auto;
+		}
+		
 		table, td {
 			border: 1px solid black;
 		}
 		
 		[type="radio"] {
-			display: block;
+			width: 100px;
+			display: inline-block;
 			margin: 5px;
 		}
 	</style>
@@ -52,7 +57,7 @@
 			if(cameras.length == 0){ return false;}
 			
 			cameras.forEach(function(item, index){
-				var radioBtn = $('<input type="radio" name="cameras" value="'+ item.id +'">' + item.name + '</input>').appendTo('div');
+				var radioBtn = $('<input type="radio" name="cameras" data-index="'+ index +'" value="'+ item.id +'">' + item.name + '</input>').appendTo('div');
 			})
 			
 		}).catch(function (e) {
@@ -65,17 +70,11 @@
 			
 			var $this = $(this);
 			
-			Instascan.Camera.getCameras().then(function (cameras) {
+			scanner.stop();
 			
-				cameras.forEach(function(item, index){
+			Instascan.Camera.getCameras().then(function (cameras) {
 				
-					scanner.stop().then(function(){
-					
-						if(item.id != $this.val()){ return false;}
-						scanner.start(cameras[index]);
-					
-					});
-				})
+				scanner.start(cameras[$this.data(index)]);
 							
 			}).catch(function (e) {
 				console.error(e);
