@@ -47,13 +47,15 @@
 				var radioBtn = $('<input type="radio" name="cameras" value="'+ item.id +'">' + item.name + '</input>').appendTo('body');
 			})
 						
+			//scanner.start(cameras[0]);
+			
 		}).catch(function (e) {
 			console.error(e);
 		});
 		
 		
 		
-		$('table').on('change', '[name="cameras"]', function(){
+		$('body').on('change', '[name="cameras"]', function(){
 			
 			var $this = $(this);
 			
