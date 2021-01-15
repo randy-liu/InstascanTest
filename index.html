@@ -57,6 +57,8 @@
 			
 			var $this = $(this);
 			
+			console.log($this);
+			
 			Instascan.Camera.getCameras().then(function (cameras) {
 			
 				cameras.forEach(function(item, index){
