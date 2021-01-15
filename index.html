@@ -26,10 +26,10 @@
 		let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 		scanner.addListener('scan', function (content) {
 			var tbody = document.getElementById('BarcodeValue').getElementsByTagName('tbody')[0];
-			var row = tbody.insertRow(0);
-			var cell1 = row.insertCell(0);
+			var row = tbody.insertRow();
+			var cel1 = row.insertCell();
 			var text = document.createTextNode(content);
-			cell1.appendChild(text);
+			cel1.appendChild(text);
 		});
 		Instascan.Camera.getCameras().then(function (cameras) {
 		if (cameras.length > 0) {
